@@ -1,0 +1,4 @@
+<resources>
+	<string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">8oj9a-eOqHCIjsu3MkG5yEectQbgfb58c42e-1a19-4a5a-96b9-bee36c9e71c6</string>
+    <string name="app_name">linkgap</string>
+</resources>
