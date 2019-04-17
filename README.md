@@ -11,3 +11,7 @@ Production
 byoQcLirAAOjPotzAKgod9dAx2tKfb58c42e-1a19-4a5a-96b9-bee36c9e71c6
 Staging
 fzr9J7i6phl9z5j_6KVUdOFxPg26fb58c42e-1a19-4a5a-96b9-bee36c9e71c6
+
+
+cd node_modules/react-native/scripts && ./ios-install-third-party.sh && cd ../../../
+cd node_modules/react-native/third-party/glog-0.3.5/ && ../../scripts/ios-configure-glog.sh
