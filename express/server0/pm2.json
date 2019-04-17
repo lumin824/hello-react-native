@@ -1,0 +1,13 @@
+{
+  "apps": [{
+    "name": "hello",
+    "script": "dist",
+    "cwd": "/data/express/server0",
+    "exec_mode": "cluster",
+    "instances": 0,
+    "max_memory_restart": "1G",
+    "autorestart": true,
+    "node_args": [],
+    "args": []
+  }]
+}
