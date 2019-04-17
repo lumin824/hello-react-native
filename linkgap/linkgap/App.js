@@ -11,6 +11,8 @@ class App extends Component {
       </View>
     );
   }
+  
+  componentDidMount() {}
 }
 
 export default withCodePush(App)
