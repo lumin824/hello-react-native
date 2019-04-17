@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "start": "babel-node src",
+    "build": "babel src -d dist",
     "dev": "nodemon"
   },
   "devDependencies": {
