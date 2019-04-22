@@ -7,20 +7,36 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity, Image, WebView} from 'react-native';
+import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity, Image, WebView, AsyncStorage} from 'react-native';
+import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import CodePush from 'react-native-code-push';
 const withCodePush = CodePush({ checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME, installMode: CodePush.InstallMode.IMMEDIATE });
 
+import axios from 'axios';
 
-type Props = {};
+import ScreenMap from './screen';
+
+import { connect } from 'react-redux'
+import { actions } from './redux';
+const withRedux = connect(
+  state => state.app,
+  dispatch => ({
+    setToken: token => dispatch(actions.app.setToken(token)),
+    setUser: user => dispatch(actions.app.setUser(user)),
+  })
+);
+
 class App extends Component<Props> {
   state = {
+    RootStack: null,
     codepushProgress_value: 0,
     text: '',
     uri: '',
   }
   render() {
+    const { RootStack } = this.state;
+    if(RootStack) return <RootStack />
     return (
       <View style={{flex:1, justifyContent: 'center'}}>
         <Text style={{ color: 'blue', textAlign: 'center'}}>Welcome to Linkgap! {this.state.codepushProgress_value} {this.state.text}</Text>
@@ -50,6 +66,46 @@ class App extends Component<Props> {
   codePushDownloadDidProgress(progress) {
     this.setState({ codepushProgress_value: progress.receivedBytes / progress.totalBytes});
   }
+
+  async componentDidMount(){
+    let initialRoute = {
+      initialRouteName: 'Login'
+    };
+
+    try {
+      const account = await AsyncStorage.getItem('account');
+
+      console.log({ account })
+      const params = JSON.parse(account);
+      const { code, message, body } = (await axios.post('https://app.5ulm.cn/app/user/login', {}, { params })).data;
+      if(code != 200) throw new Error(message);
+
+      console.log({ body });
+      const { token } = body;
+      this.props.setToken(token);
+      this.props.setUser(body);
+
+      initialRoute = {
+        initialRouteName: 'HomeBottomTab',
+      };
+
+    }catch(e) { console.log({ e })}
+
+    const { Home, Mine, ...StackScreenMap } = ScreenMap;
+
+    const HomeBottomTab = createBottomTabNavigator({
+      Home, Mine,
+    })
+
+    const RootStack = createStackNavigator({ HomeBottomTab, ...StackScreenMap }, {
+      ...initialRoute,
+      navigationOptions: {
+        header: null,
+      },
+    })
+
+    this.setState({ RootStack });
+  }
 }
 
-export default withCodePush(App);
+export default withRedux(withCodePush(App));

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, AsyncStorage } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator, StackActions, NavigationActions } from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import CodePush from 'react-native-code-push';
 const withCodePush = CodePush({ checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME, installMode: CodePush.InstallMode.IMMEDIATE });
 

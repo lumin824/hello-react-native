@@ -8,9 +8,16 @@
     "publish": "code-push release-react linkgap0-android android --t 1.0 --m true --d Production && code-push release-react linkgap0-ios ios --t 1.0 --m true --d Production"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "lodash": "^4.17.11",
     "react": "16.8.3",
     "react-native": "0.59.4",
-    "react-native-code-push": "^5.6.0"
+    "react-native-code-push": "^5.6.0",
+    "react-navigation": "2.18.2",
+    "react-redux": "5.1.1",
+    "redux": "^4.0.1",
+    "redux-actions": "^2.6.5",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
